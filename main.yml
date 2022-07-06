@@ -17,7 +17,7 @@
 
     - name: Debug config asis
       debug:
-        var: config_asis
+        var: config_asis.stdout_lines[0]
 
     - name: Debug config tobe
       debug:
@@ -28,14 +28,12 @@
         cisco_commands: "{{ cisco_commands + [item] }}"
       loop: "{{ config_tobe }}"
       when: item not in config_asis.stdout_lines[0]
-      #when: item in config_asis.stdout_lines[0]
 
     - name: Set commands to remove (no)
       set_fact:
-        cisco_no_commands: "{{ cisco_no_commands + [item] }}"
+        cisco_no_commands: "{{ cisco_no_commands + ['no ' + item] }}"
       loop: "{{ config_asis.stdout_lines[0] }}"
       when: item not in config_tobe
-      #when: item in config_tobe
 
     - name: Debug commands
       debug:
