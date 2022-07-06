@@ -12,7 +12,7 @@
 
     - name: Capture show command
       cisco.ios.ios_command:
-        command: "{{ command }}"
+        commands: "{{ command }}"
       register: config_asis
 
     - name: Debug config asis
