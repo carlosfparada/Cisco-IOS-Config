@@ -10,7 +10,7 @@
   tasks:
     - include_vars: main.yml
 
-    - name: Capture show command
+    - name: Capture show command output
       cisco.ios.ios_command:
         commands: "{{ command }}"
       register: config_asis
@@ -19,17 +19,17 @@
       debug:
         var: config_asis.stdout_lines[0]
 
-    - name: Debug config tobe
+    - name: Debug config tobe (vars/main.yml)
       debug:
         var: config_tobe
 
-    - name: Set commands to add
+    - name: Select commands to add
       set_fact:
         cisco_commands: "{{ cisco_commands + [item] }}"
       loop: "{{ config_tobe }}"
       when: item not in config_asis.stdout_lines[0]
 
-    - name: Set commands to remove (no)
+    - name: Select commands to remove (no)
       set_fact:
         cisco_no_commands: "{{ cisco_no_commands + ['no ' + item] }}"
       loop: "{{ config_asis.stdout_lines[0] }}"
@@ -43,12 +43,12 @@
       debug:
         var: cisco_no_commands
 
-    - name: Run the no commands
+    - name: Run no commands
       cisco.ios.ios_config:
         lines: "{{ cisco_no_commands }}"
         #parents: []
 
-    - name: Run the commands
+    - name: Run commands
       cisco.ios.ios_config:
         lines: "{{ cisco_commands }}"
         #parents: []
