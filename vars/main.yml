@@ -17,3 +17,4 @@ config_tobe:
   - "radius-server vsa send authentication"
   - "radius server foo1"
   - "radius server foo2"
+  - "radius server foo3"
