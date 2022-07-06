@@ -31,7 +31,7 @@
 
     - name: Set commands to remove (no)
       set_fact:
-        no_commands: "{{ cisco_no_commands + [item] }}"
+        cisco_no_commands: "{{ cisco_no_commands + [item] }}"
       loop: "{{ config_asis.stdout_lines }}"
       when: item not in config_tobe
 
