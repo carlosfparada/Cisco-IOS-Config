@@ -1,1 +1,19 @@
 ---
+
+command: "show running-config all | include radius"
+
+config_tobe: 
+  - "radius-server attribute 77 include-in-acct-req"
+  - "radius-server attribute 77 include-in-access-req"
+  - "radius-server attribute 11 default direction out"
+  - "radius-server attribute nas-port format a"
+  - "radius-server cache expiry 24 enforce hours"
+  - "radius-server transaction max-tries 8"
+  - "radius-server retransmit 3"
+  - "radius-server timeout 5"
+  - "radius-server ipc-limit in 10"
+  - "radius-server ipc-limit done 10"
+  - "radius-server vsa send accounting"
+  - "radius-server vsa send authentication"
+  - "radius server foo1"
+  - "radius server foo2"

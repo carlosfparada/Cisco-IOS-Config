@@ -10,21 +10,21 @@
   tasks:
     - include_vars: main.yml
 
-    - name: Capture and parse show commands
-      ansible.utils.cli_parse:
-        command: "show interfaces"
-        parser:
-          name: ansible.netcommon.pyats
-      register: _radius
-
-    - name: Capture and parse show commands
+    - name: Capture show command
       cisco.ios.ios_command:
-        commands: show running-config all | include radius
-      register: _radius
+        commands: "{{ command }}"
+      register: _config_asis
 
     - name: Debug
       debug:
-        var: _radius
+        var: _config_asis.stdout_lines
+
+    - name: Debug
+      debug:
+        var: item
+      with_nested:
+        - _config_asis.stdout_lines
+        - config_tobe
 
 
     # - name: Set variable for policy services / applications
