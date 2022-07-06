@@ -31,7 +31,7 @@
 
     - name: Set variable for policy services / applications
       set_fact:
-        commands: "{{ no_commands + ['no ' + item] }}"
+        commands: "{{ no_commands + [item] }}"
       loop: "{{ _config_asis.stdout_lines }}"
       when: item not in config_tobe
 
@@ -42,3 +42,5 @@
     - name: Debug no commands
       debug:
         var: _no_commands
+
+    fw_conf_lines: "{{ fw_conf_lines + ['set security policies from-zone ' + _src_zone + ' to-zone ' + _dest_zone + ' policy ' + _rule.name + ' match application ' + srx_services[_service] ] }}"
