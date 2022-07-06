@@ -48,7 +48,7 @@
     - name: Run the no commands
       cisco.ios.ios_config:
         lines: "{{ cisco_no_commands }}"
-      parents: []
+        parents: []
 
     - name: Run the commands
       cisco.ios.ios_config:
