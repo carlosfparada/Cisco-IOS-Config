@@ -19,7 +19,8 @@
 
     - name: Capture and parse show commands
       cisco.ios.ios_command:
-        command: "show running-config all | include radius"
+        commands:
+          - "show running-config all | include radius"
       register: _radius
 
     - name: Debug
