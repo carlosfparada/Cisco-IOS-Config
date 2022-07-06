@@ -12,8 +12,15 @@
 
     - name: Capture and parse show commands
       ansible.utils.cli_parse:
-        #command: "show running-config all | include radius"
         command: "show interfaces"
+        parser:
+          name: ansible.netcommon.pyats
+      register: _radius
+
+    - name: Capture and parse show commands
+      ansible.utils.cli_parse:
+        command: "show running-config all"
+        #command: "show running-config all | include radius"
         parser:
           name: ansible.netcommon.pyats
       register: _radius
