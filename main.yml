@@ -4,8 +4,8 @@
   gather_facts: false
   connection: local
   vars:
-    commands: []
-    no_commands: []
+    cisco_commands: []
+    cisco_no_commands: []
 
   tasks:
     - include_vars: main.yml
@@ -13,11 +13,11 @@
     - name: Capture show command
       cisco.ios.ios_command:
         commands: "{{ command }}"
-      register: _config_asis
+      register: config_asis
 
     - name: Debug config asis
       debug:
-        var: _config_asis.stdout_lines
+        var: config_asis.stdout_lines
 
     - name: Debug config asis
       debug:
@@ -25,22 +25,22 @@
 
     - name: Set commands to add
       set_fact:
-        commands: "{{ commands + [item] }}"
+        cisco_commands: "{{ cisco_commands + [item] }}"
       loop: "{{ config_tobe }}"
-      when: item not in _config_asis.stdout_lines
+      when: item not in config_asis.stdout_lines
 
     - name: Set commands to remove (no)
       set_fact:
-        no_commands: "{{ no_commands + [item] }}"
-      loop: "{{ _config_asis.stdout_lines }}"
+        no_commands: "{{ cisco_no_commands + [item] }}"
+      loop: "{{ config_asis.stdout_lines }}"
       when: item not in config_tobe
 
     - name: Debug commands
       debug:
-        var: commands
+        var: cisco_commands
 
     - name: Debug no commands
       debug:
-        var: no_commands
+        var: cisco_no_commands
 
     #fw_conf_lines: "{{ fw_conf_lines + ['set security policies from-zone ' + _src_zone + ' to-zone ' + _dest_zone + ' policy ' + _rule.name + ' match application ' + srx_services[_service] ] }}"
