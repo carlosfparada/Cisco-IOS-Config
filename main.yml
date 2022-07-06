@@ -23,8 +23,8 @@
       debug:
         var: item
       with_nested:
-        - _config_asis.stdout_lines
-        - config_tobe
+        - "{{ _config_asis.stdout_lines }}"
+        - "{{ config_tobe }}"
 
 
     # - name: Set variable for policy services / applications
