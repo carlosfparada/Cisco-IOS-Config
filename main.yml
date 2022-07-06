@@ -12,7 +12,8 @@
 
     - name: Capture and parse show commands
       ansible.utils.cli_parse:
-        command: "show running all | include radius"
+        #command: "show running-config all | include radius"
+        command: "show vlan"
         parser:
           name: ansible.netcommon.pyats
       register: _radius
