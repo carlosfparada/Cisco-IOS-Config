@@ -1,0 +1,29 @@
+---
+- name: Cisco IOS config
+  hosts: cisco-rtr1
+  gather_facts: false
+  connection: local
+  vars:
+    commands: []
+    no_commands: []
+
+  tasks:
+    - include_vars: main.yml
+
+    - name: Capture and parse show commands
+      ansible.utils.cli_parse:
+        command: "show running all | include radius"
+        parser:
+          name: ansible.netcommon.pyats
+      register: _radius
+
+    - name: Debug
+      debug:
+        var: _radius
+
+
+    # - name: Set variable for policy services / applications
+    #   set_fact:
+    #     fw_conf_lines: "{{ fw_conf_lines + ['set security policies from-zone ' + _src_zone + ' to-zone ' + _dest_zone + ' policy ' + _rule.name + ' match application ' + srx_services[_service] ] }}"
+
+
