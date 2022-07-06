@@ -21,8 +21,8 @@
       ansible.utils.cli_parse:
         command: "show running-config all"
         #command: "show running-config all | include radius"
-        parser:
-          name: ansible.netcommon.pyats
+        #parser:
+        #  name: ansible.netcommon.pyats
       register: _radius
 
     - name: Debug
