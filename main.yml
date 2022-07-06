@@ -18,6 +18,13 @@
       register: _radius
 
     - name: Capture and parse show commands
+      ansible.utils.cli_parse:
+        command: "show running-config all | include radius"
+        parser:
+          name: ansible.netcommon.pyats
+      register: _radius
+
+    - name: Capture and parse show commands
       cisco.ios.ios_command:
         commands: show running-config all | include radius
       register: _radius
