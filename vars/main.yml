@@ -1,8 +1,7 @@
 ---
 
-command: "show running-config all | include radius"
-
-config_tobe: 
+# Radius config
+radius_tobe: 
   - "radius-server attribute 77 include-in-acct-req"
   - "radius-server attribute 77 include-in-access-req"
   - "radius-server attribute 11 default direction out"
@@ -19,8 +18,8 @@ config_tobe:
   #- "radius server foo2"
   #- "radius server foo3"
 
-# Cisco
-cisco_vlans:
+# Vlan config
+vlans_tobe:
   - name: Vlan_101
     vlan_id: 101
     state: active
@@ -30,3 +29,4 @@ cisco_vlans:
   - name: Vlan_103
     vlan_id: 103
     state: active
+

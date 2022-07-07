@@ -12,28 +12,28 @@
 
     - name: Capture show command output
       cisco.ios.ios_command:
-        commands: "{{ command }}"
-      register: config_asis
+        commands: "show running-config all | include radius"
+      register: radius_asis
 
-    - name: Debug config asis
+    - name: Debug radius config asis
       debug:
-        var: config_asis.stdout_lines[0]
+        var: radius_asis.stdout_lines[0]
 
-    - name: Debug config tobe (vars/main.yml)
+    - name: Debug radius config tobe (vars/main.yml)
       debug:
-        var: config_tobe
+        var: radius_tobe
 
     - name: Select commands to add
       set_fact:
         cisco_commands: "{{ cisco_commands + [item] }}"
-      loop: "{{ config_tobe }}"
-      when: item not in config_asis.stdout_lines[0]
+      loop: "{{ radius_tobe }}"
+      when: item not in radius_asis.stdout_lines[0]
 
     - name: Select commands to remove (no)
       set_fact:
         cisco_no_commands: "{{ cisco_no_commands + ['no ' + item] }}"
-      loop: "{{ config_asis.stdout_lines[0] }}"
-      when: item not in config_tobe
+      loop: "{{ radius_asis.stdout_lines[0] }}"
+      when: item not in radius_tobe
 
     - name: Debug commands
       debug:

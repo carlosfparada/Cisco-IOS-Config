@@ -10,8 +10,9 @@
 
   - name: Cisco IOS Config vlans
     cisco.ios.ios_vlans:
-      config: "{{ cisco_vlans }}"
-      state: merged 
+      config: "{{ vlans_tobe }}"
+      state: merged
+      #state: overridden
     register: _vlan
     become: yes
 
