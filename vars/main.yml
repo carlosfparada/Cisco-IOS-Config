@@ -14,9 +14,9 @@ radius_tobe:
   - "radius-server ipc-limit done 10"
   - "radius-server vsa send accounting"
   - "radius-server vsa send authentication"
-  - "radius server foo1"
-  #- "radius server foo2"
-  #- "radius server foo3"
+  #- "radius server foo1"
+  - "radius server foo2"
+  - "radius server foo3"
 
 # Vlan config
 vlans_tobe:
@@ -28,5 +28,8 @@ vlans_tobe:
     state: active
   - name: Vlan_103
     vlan_id: 103
+    state: active
+  - name: Vlan_104
+    vlan_id: 104
     state: active
 
