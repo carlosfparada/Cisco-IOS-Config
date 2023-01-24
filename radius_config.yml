@@ -27,13 +27,13 @@
       set_fact:
         cisco_commands: "{{ cisco_commands + [item] }}"
       loop: "{{ radius_tobe }}"
-      when: item not in radius_asis.stdout_lines[0]
+      when: item not in radius_asis.stdout_lines[0] and item != ""
 
     - name: Select commands to remove (no)
       set_fact:
         cisco_no_commands: "{{ cisco_no_commands + ['no ' + item] }}"
       loop: "{{ radius_asis.stdout_lines[0] }}"
-      when: item not in radius_tobe
+      when: item not in radius_tobe and item != ""
 
     - name: Debug commands
       debug:
@@ -46,11 +46,11 @@
     - name: Run no commands
       cisco.ios.ios_config:
         lines: "{{ cisco_no_commands }}"
+        #parents: []
       when: cisco_no_commands|length>0 
-      #parents: []
 
     - name: Run commands
       cisco.ios.ios_config:
         lines: "{{ cisco_commands }}"
-        when: cisco_commands|length>0 
         #parents: []
+      when: cisco_commands|length>0 
