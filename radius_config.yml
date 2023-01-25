@@ -1,6 +1,6 @@
 ---
 - name: Cisco IOS config
-  hosts: ios-rt1
+  hosts: nxos-9k
   gather_facts: false
   connection: local
   vars:
